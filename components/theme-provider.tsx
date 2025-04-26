@@ -31,8 +31,10 @@ export function ThemeProvider({
   ...props
 }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(defaultTheme)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
     const savedTheme = localStorage.getItem(storageKey)
 
     if (savedTheme && ["dark", "light", "system"].includes(savedTheme)) {
@@ -41,6 +43,8 @@ export function ThemeProvider({
   }, [storageKey])
 
   useEffect(() => {
+    if (!mounted) return
+
     const root = window.document.documentElement
 
     root.classList.remove("light", "dark")
@@ -53,16 +57,19 @@ export function ThemeProvider({
     }
 
     root.classList.add(theme)
-  }, [theme])
+  }, [theme, mounted])
 
   const value = {
     theme,
     setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme)
+      if (mounted) {
+        localStorage.setItem(storageKey, theme)
+      }
       setTheme(theme)
     },
   }
 
+  // Prevent hydration mismatch by not rendering anything until mounted
   return (
     <ThemeProviderContext.Provider {...props} value={value}>
       {children}

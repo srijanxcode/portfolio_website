@@ -23,11 +23,14 @@ export default function ProjectsSection() {
   }
 
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 50, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
       transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 12,
         duration: 0.5,
       },
     },
@@ -91,7 +94,8 @@ export default function ProjectsSection() {
   ]
 
   return (
-    <section id="projects" className="bg-muted/30 py-20" ref={ref}>
+    <section id="projects" className="bg-muted/30 py-20 relative overflow-hidden" ref={ref}>
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_70%_70%,rgba(0,191,255,0.05),transparent)]"></div>
       <div className="container px-4 md:px-6">
         <motion.div
           className="mb-12 text-center"
@@ -99,7 +103,12 @@ export default function ProjectsSection() {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">Featured Projects</h2>
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+            <span className="relative">
+              Featured Projects
+              <span className="absolute -bottom-2 left-0 w-full h-1 bg-primary/30"></span>
+            </span>
+          </h2>
           <div className="mt-4 h-1 w-12 bg-primary mx-auto"></div>
           <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
             Here are some of my recent projects. Each one was built to solve a specific problem or explore new
@@ -114,8 +123,8 @@ export default function ProjectsSection() {
           animate={isInView ? "visible" : "hidden"}
         >
           {projects.map((project, index) => (
-            <motion.div key={index} variants={itemVariants}>
-              <Card className="overflow-hidden h-full flex flex-col">
+            <motion.div key={index} variants={itemVariants} whileHover={{ y: -5 }} className="h-full">
+              <Card className="overflow-hidden h-full flex flex-col border-primary/10 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">
                 <div className="relative aspect-video overflow-hidden">
                   <Image
                     src={project.image || "/placeholder.svg"}
@@ -124,6 +133,9 @@ export default function ProjectsSection() {
                     height={400}
                     className="object-cover transition-transform duration-500 hover:scale-105"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                    <h3 className="text-white text-xl font-bold">{project.title}</h3>
+                  </div>
                 </div>
                 <CardContent className="flex flex-col flex-grow p-6">
                   <h3 className="text-xl font-bold mb-2">{project.title}</h3>
@@ -139,15 +151,15 @@ export default function ProjectsSection() {
                     ))}
                   </div>
                   <div className="flex gap-3 mt-auto">
-                    <Button asChild variant="outline" size="sm">
+                    <Button asChild variant="outline" size="sm" className="group">
                       <Link href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                        <Github className="mr-2 h-4 w-4" />
+                        <Github className="mr-2 h-4 w-4 transition-transform group-hover:scale-110" />
                         Code
                       </Link>
                     </Button>
-                    <Button asChild size="sm">
+                    <Button asChild size="sm" className="group">
                       <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="mr-2 h-4 w-4" />
+                        <ExternalLink className="mr-2 h-4 w-4 transition-transform group-hover:scale-110" />
                         Live Demo
                       </Link>
                     </Button>
@@ -159,11 +171,18 @@ export default function ProjectsSection() {
         </motion.div>
 
         <div className="mt-12 text-center">
-          <Button asChild variant="outline" size="lg">
-            <Link href="https://github.com/srijanxcode" target="_blank" rel="noopener noreferrer">
-              View More Projects on GitHub
-            </Link>
-          </Button>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ delay: 0.6, duration: 0.5 }}
+          >
+            <Button asChild variant="outline" size="lg" className="group relative overflow-hidden">
+              <Link href="https://github.com/srijanxcode" target="_blank" rel="noopener noreferrer">
+                <span className="relative z-10">View More Projects on GitHub</span>
+                <span className="absolute inset-0 z-0 bg-primary/10 translate-y-full transition-transform duration-300 group-hover:translate-y-0"></span>
+              </Link>
+            </Button>
+          </motion.div>
         </div>
       </div>
     </section>

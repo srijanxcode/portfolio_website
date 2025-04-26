@@ -11,9 +11,12 @@ import { ThemeToggle } from "@/components/theme-toggle"
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
   const { toast } = useToast()
 
   useEffect(() => {
+    setMounted(true)
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10)
     }
@@ -37,7 +40,7 @@ export default function Header() {
     <header
       className={cn(
         "fixed top-0 z-50 w-full transition-all duration-300",
-        isScrolled ? "bg-background/80 backdrop-blur-md shadow-sm" : "bg-transparent",
+        mounted && isScrolled ? "bg-background/80 backdrop-blur-md shadow-sm" : "bg-transparent",
       )}
     >
       <div className="container mx-auto flex h-16 items-center justify-between px-4">

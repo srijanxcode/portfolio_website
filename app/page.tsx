@@ -18,7 +18,7 @@ export default function Home() {
         <div className="container mx-auto flex justify-center py-8">
           <Link
             href="#about"
-            className="flex items-center gap-2 rounded-full bg-muted p-4 text-muted-foreground transition-colors hover:text-foreground"
+            className="flex items-center gap-2 rounded-full bg-muted p-4 text-muted-foreground transition-all duration-300 hover:text-primary hover:bg-primary/10 hover:scale-110"
             aria-label="Scroll to About section"
           >
             <ArrowDown className="h-6 w-6 animate-bounce" />

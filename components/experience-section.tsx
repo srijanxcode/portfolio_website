@@ -24,6 +24,9 @@ export default function ExperienceSection() {
       y: 0,
       opacity: 1,
       transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 12,
         duration: 0.5,
       },
     },
@@ -57,7 +60,8 @@ export default function ExperienceSection() {
   ]
 
   return (
-    <section id="experience" className="py-20" ref={ref}>
+    <section id="experience" className="py-20 relative overflow-hidden" ref={ref}>
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_30%_70%,rgba(0,191,255,0.05),transparent)]"></div>
       <div className="container px-4 md:px-6">
         <motion.div
           className="mb-12 text-center"
@@ -65,7 +69,12 @@ export default function ExperienceSection() {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">Experience</h2>
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+            <span className="relative">
+              Experience
+              <span className="absolute -bottom-2 left-0 w-full h-1 bg-primary/30"></span>
+            </span>
+          </h2>
           <div className="mt-4 h-1 w-12 bg-primary mx-auto"></div>
           <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
             My professional journey and the organizations I've had the pleasure to work with.
@@ -79,7 +88,7 @@ export default function ExperienceSection() {
           animate={isInView ? "visible" : "hidden"}
         >
           {/* Timeline line */}
-          <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-border ml-6 md:mx-auto md:left-0 md:right-0"></div>
+          <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-primary/20 ml-6 md:mx-auto md:left-0 md:right-0"></div>
 
           {experiences.map((exp, index) => (
             <motion.div
@@ -91,29 +100,39 @@ export default function ExperienceSection() {
               {index % 2 === 0 && <div className="hidden md:block" />}
 
               {/* Timeline dot */}
-              <div className="flex items-center justify-center">
+              <motion.div
+                className="flex items-center justify-center"
+                whileHover={{ scale: 1.1 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              >
                 <div className="w-12 h-12 rounded-full bg-primary/10 border-4 border-background flex items-center justify-center z-10">
                   <Calendar className="h-5 w-5 text-primary" />
                 </div>
-              </div>
+              </motion.div>
 
               {/* Content */}
-              <div className={`bg-card rounded-lg border p-6 shadow-sm ${index % 2 === 1 ? "md:text-right" : ""}`}>
+              <motion.div
+                className={`bg-card rounded-lg border border-primary/10 p-6 shadow-sm transition-all duration-300 hover:shadow-md hover:shadow-primary/10 ${index % 2 === 1 ? "md:text-right" : ""}`}
+                whileHover={{ y: -5 }}
+              >
                 <h3 className="text-xl font-bold">{exp.title}</h3>
                 <p className="text-primary font-medium">{exp.company}</p>
                 <p className="text-muted-foreground text-sm mb-4">{exp.period}</p>
                 <p className="mb-4">{exp.description}</p>
                 <div className={`flex flex-wrap gap-2 ${index % 2 === 1 ? "md:justify-end" : ""}`}>
                   {exp.technologies.map((tech, techIndex) => (
-                    <span
+                    <motion.span
                       key={techIndex}
-                      className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.1 * techIndex, duration: 0.3 }}
+                      className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary hover:bg-primary/20 transition-colors duration-300"
                     >
                       {tech}
-                    </span>
+                    </motion.span>
                   ))}
                 </div>
-              </div>
+              </motion.div>
 
               {/* For desktop, add empty column on even indexes */}
               {index % 2 === 1 && <div className="hidden md:block" />}

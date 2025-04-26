@@ -24,6 +24,9 @@ export default function SkillsSection() {
       y: 0,
       opacity: 1,
       transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 12,
         duration: 0.5,
       },
     },
@@ -63,7 +66,8 @@ export default function SkillsSection() {
   ]
 
   return (
-    <section id="skills" className="py-20" ref={ref}>
+    <section id="skills" className="py-20 relative overflow-hidden" ref={ref}>
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_30%_30%,rgba(0,191,255,0.05),transparent)]"></div>
       <div className="container px-4 md:px-6">
         <motion.div
           className="mb-12 text-center"
@@ -71,7 +75,12 @@ export default function SkillsSection() {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">Skills & Technologies</h2>
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+            <span className="relative">
+              Skills & Technologies
+              <span className="absolute -bottom-2 left-0 w-full h-1 bg-primary/30"></span>
+            </span>
+          </h2>
           <div className="mt-4 h-1 w-12 bg-primary mx-auto"></div>
           <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
             Here are some of the technologies and tools I work with on a regular basis.
@@ -88,20 +97,34 @@ export default function SkillsSection() {
             <motion.div
               key={index}
               variants={itemVariants}
-              className="rounded-lg border bg-card p-6 shadow-sm transition-all hover:shadow-md"
+              whileHover={{
+                y: -5,
+                boxShadow: "0 10px 25px -5px rgba(0, 191, 255, 0.1), 0 8px 10px -6px rgba(0, 191, 255, 0.1)",
+              }}
+              className="rounded-lg border border-primary/10 bg-card p-6 shadow-sm transition-all duration-300"
             >
               <div className="mb-4 flex items-center gap-3">
-                {skill.icon}
+                <motion.div
+                  initial={{ scale: 1 }}
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                  className="rounded-full bg-primary/10 p-3"
+                >
+                  {skill.icon}
+                </motion.div>
                 <h3 className="text-xl font-semibold">{skill.category}</h3>
               </div>
               <div className="flex flex-wrap gap-2">
                 {skill.items.map((item, itemIndex) => (
-                  <span
+                  <motion.span
                     key={itemIndex}
-                    className="rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.1 * itemIndex, duration: 0.3 }}
+                    className="rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary hover:bg-primary/20 transition-colors duration-300"
                   >
                     {item}
-                  </span>
+                  </motion.span>
                 ))}
               </div>
             </motion.div>
