@@ -159,6 +159,39 @@
   pointer-events: none;
 }
 
+/* Add these styles at the end of the file, before the print styles section */
+
+/* PDF Viewer Styles */
+@keyframes pulse-border {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 191, 255, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(0, 191, 255, 0.2);
+  }
+}
+
+.pdf-container {
+  animation: pulse-border 3s infinite;
+}
+
+.pdf-controls button {
+  transition: all 0.3s ease;
+}
+
+.pdf-controls button:hover {
+  transform: translateY(-2px);
+}
+
+/* Floating particles for PDF background */
+.pdf-particle {
+  position: absolute;
+  background-color: rgba(0, 191, 255, 0.2);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
 /* Print styles */
 @media print {
   @page {

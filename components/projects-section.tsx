@@ -38,6 +38,15 @@ export default function ProjectsSection() {
 
   const projects = [
     {
+      title: "HyperspectralImageAnalysis",
+      description:
+        "A Streamlit web app for hyperspectral crop classification using 3D CNNs. Processes agricultural field data, visualizes crop distribution, and provides health assessments with farming recommendations.",
+      image: "/placeholder.svg?height=400&width=600",
+      tags: ["Python", "Streamlit", "3D CNN", "Deep Learning", "Agriculture", "Image Processing"],
+      liveUrl: "#",
+      githubUrl: "https://github.com/srijanxcode/HyperspectralImageAnalysis",
+    },
+    {
       title: "Satellite-Based Marine Ecosystem Monitoring",
       description:
         "A web application that uses satellite data and AI models to monitor marine ecosystem issues including chlorophyll concentration, ocean currents, and plastic debris detection.",
@@ -81,15 +90,6 @@ export default function ProjectsSection() {
       tags: ["Machine Learning", "Data Analysis", "Python", "Scikit-learn"],
       liveUrl: "#",
       githubUrl: "https://github.com/srijanxcode/weather-prediction",
-    },
-    {
-      title: "PCB Design for Sensor Array",
-      description:
-        "Custom PCB design for a sensor array used in environmental monitoring applications, featuring multiple sensor interfaces and low power consumption.",
-      image: "/placeholder.svg?height=400&width=600",
-      tags: ["PCB Design", "Electronics", "Sensors", "Embedded Systems"],
-      liveUrl: "#",
-      githubUrl: "https://github.com/srijanxcode/sensor-pcb",
     },
   ]
 

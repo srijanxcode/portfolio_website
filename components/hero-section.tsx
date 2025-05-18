@@ -6,6 +6,8 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import dynamic from "next/dynamic"
+import { HackerRankLogo } from "./hackerrank-logo"
+import { LeetCodeLogo } from "./leetcode-logo"
 
 // Dynamically import Particles with no SSR
 const Particles = dynamic(() => import("@/components/particles"), { ssr: false })
@@ -110,6 +112,24 @@ export default function HeroSection() {
                 aria-label="LinkedIn"
               >
                 <Linkedin className="h-5 w-5" />
+              </Link>
+              <Link
+                href="https://www.hackerrank.com/profile/blitzkreigiit"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full p-2 text-muted-foreground transition-all hover:bg-primary/10 hover:text-primary hover:scale-110"
+                aria-label="HackerRank"
+              >
+                <HackerRankLogo className="h-5 w-5" />
+              </Link>
+              <Link
+                href="https://leetcode.com/u/srijanx35/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full p-2 text-muted-foreground transition-all hover:bg-primary/10 hover:text-primary hover:scale-110"
+                aria-label="LeetCode"
+              >
+                <LeetCodeLogo className="h-5 w-5" />
               </Link>
               <Link
                 href="mailto:blitzkreigiit@gmail.com"
